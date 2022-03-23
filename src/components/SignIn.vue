@@ -9,7 +9,7 @@
     <input type="password" v-model="password" placeholder="Password" />
   </div>
 
-  <button @click="logIn">SignIn</button>
+  <button @click="signIn">SignIn</button>
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
   },
 
   methods: {
-    async logIn() {
+    async signIn() {
       try {
         const { error } = await supabase.auth.signIn({
           email: this.email,
