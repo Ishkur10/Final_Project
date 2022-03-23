@@ -1,0 +1,11 @@
+    async signIn() {
+      const login = await supabase.auth.signIn({
+        email: this.email,
+        password: this.password,
+      });
+      if(login.error) {
+          console.log(login.error)
+      } else {
+          this.$router.push('/')
+      }
+    },
