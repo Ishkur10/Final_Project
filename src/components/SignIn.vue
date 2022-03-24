@@ -1,5 +1,8 @@
 <template>
-  <h3>SignIn</h3>
+<body class="text-center">
+  
+
+  <h3 class="h3 mb-3 fw-normal">SignIn</h3>
   <div>
     <label>Email</label>
     <input type="email" v-model="email" placeholder="Email" />
@@ -10,6 +13,7 @@
   </div>
 
   <button @click="signIn">SignIn</button>
+  </body>
 </template>
 
 <script>

@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(task, index) in tasks" :key="index">
+        <tr v-for="(task, index) in pendingTasks" :key="index">
           <td>
             {{ task.name }}
           </td>
@@ -33,7 +33,7 @@
             <button>Edit</button>
           </div>
           <div>
-            <button @click="changeStatus(index)">Complete</button>
+            <button @click="changeStatus(task)">Complete</button>
           </div>
           <div @click="deleteTask(index)">
             <button>Delete</button>
@@ -53,7 +53,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(task, index) in tasks" :key="index">
+        <tr v-for="(task, index) in completedTasks" :key="index">
           <td>
             {{ task.name }}
           </td>
@@ -65,7 +65,7 @@
             <button>Edit</button>
           </div>
           <div>
-            <button @click="changeStatus(index)">Re-do</button>
+            <button @click="changeStatus(task)">Re-do</button>
           </div>
           <div @click="deleteTask(index)">
             <button>Delete</button>
@@ -91,44 +91,43 @@ export default {
       editedTask: null,
       availableStatuses: ["To-do", "Donete"],
       tasks: [
-        {
-          name: "",
-          status: "",
-        },
-        {
-          name: "",
-          status: "",
-        },
-        {
-          name: "",
-          status: "",
-        },
-        {
-          name: "",
-          status: "",
-        },
+        // {
+        //   name: "Tarea 1",
+        //   status: "To-do",
+        // },
+        // {
+        //   name: "Tarea 2",
+        //   status: "Donete",
+        // },
+        // {
+        //   name: "Tarea 3",
+        //   status: "To-do",
+        // },
       ],
+      pendingTasks: [],
       completedTasks: [
-        {
-          name: "",
-          status: "",
-        },
-        {
-          name: "",
-          status: "",
-        },
-        {
-          name: "",
-          status: "",
-        },
-        {
-          name: "",
-          status: "",
-        },
+        // {
+        //   name: "",
+        //   status: "",
+        // },
+        // {
+        //   name: "",
+        //   status: "",
+        // },
+        // {
+        //   name: "",
+        //   status: "",
+        // },
+        // {
+        //   name: "",
+        //   status: "",
+        // },
       ],
     };
   },
-
+  mounted() {
+    this.sortTasks();
+  },
   methods: {
     submitTask() {
       if (this.task.length === 0) return;
@@ -143,20 +142,39 @@ export default {
         this.editedTask = null;
       }
       this.task = "";
-
+      this.sortTasks();
       console.log(this.task);
     },
     deleteTask(index) {
-      this.tasks.splice(index, 1);
+      this.pendingTasks.splice(index, 1);
+      this.completedTasks.splice(index, 1);
+    },
+    sortTasks() {
+      this.pendingTasks = [];
+      this.completedTasks = [];
+      this.tasks.forEach(task => {
+        if(task.status === 'To-do'){
+          this.pendingTasks.push(task)
+        } else {
+          this.completedTasks.push(task)
+        }
+      })
     },
     editTask(index) {
       this.task = this.tasks[index].name;
       this.editedTask = index;
     },
-    changeStatus(index) {
-      let newIndex = this.availableStatuses.indexOf(this.tasks[index].status);
-      if (++newIndex > 1) newIndex = 0;
-      this.tasks[index].status = this.availableStatuses[newIndex];
+    changeStatus(task) {
+      let myIndex = this.tasks.indexOf(task);
+      if(this.tasks[myIndex].status === 'To-do'){
+        this.tasks[myIndex].status = 'Donete'
+      } else {
+        this.tasks[myIndex].status = 'To-do'
+      }
+      // let newIndex = this.availableStatuses.indexOf(this.tasks[index].status);
+      // if (++newIndex > 1) newIndex = 0;
+      // this.tasks[index].status = this.availableStatuses[newIndex];
+      this.sortTasks()
     },
   },
 };
