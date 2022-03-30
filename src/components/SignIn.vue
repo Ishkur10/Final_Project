@@ -1,18 +1,18 @@
 <template>
-<body class="text-center">
-  
-
-  <h3 class="h3 mb-3 fw-normal">SignIn</h3>
+<body class="text-center ">
   <div>
-    <label>Email</label>
-    <input type="email" v-model="email" placeholder="Email" />
+  <h3>SignIn</h3>
   </div>
-  <div>
-    <label>Password</label>
-    <input type="password" v-model="password" placeholder="Password" />
+  <div class="borderSign">
+  <div class="emailbutton">
+    <input type="email" v-model="email" placeholder="Enter your Email" />
+  </div>
+  <div class="passwordlable">
+    <input type="password" v-model="password" placeholder="Enter your Password" style="margin-left: 2px;" />
   </div>
 
-  <button @click="signIn">SignIn</button>
+  <button class="signinbutton" @click="signIn">SignIn</button>  
+  </div>
   </body>
 </template>
 
@@ -48,4 +48,22 @@ export default {
 </script>
 
 <style>
+.borderSign{
+  border: 2px solid ;
+  padding-bottom: 20px;
+  width: auto;
+  margin-left: 1000px;
+  margin-right: 1000px;
+  align-content: center;
+}
+.emailbutton{
+  margin-top: 20px;
+}
+.passwordlable{
+  margin-top: 10px;
+  margin-bottom: 20px
+}
+.signinbutton{
+  margin-top: 10px;
+}
 </style>

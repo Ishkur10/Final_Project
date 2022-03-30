@@ -1,11 +1,11 @@
 <template>
       <div id="app">
 <!-- <Nav/> -->
-<div class="wrapper">
+<div class="text-center">
     <div>
         <SignIn v-if="signIn" />
         <SignUp v-else />
-        <button @click="change">Change</button>
+        <button class="changebutton" @click="change">Change</button>
     </div>
 </div>
     </div>
@@ -43,5 +43,8 @@ methods: {
 </script>
 
 <style>
+.changebutton{
+margin-top: 10px;
+}
 
 </style>

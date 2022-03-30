@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { createLogger } from "vite";
 import { supabase } from "../supabase";
 export const useTaskStore = defineStore("tasks", {
   state: () => ({
@@ -12,5 +13,9 @@ export const useTaskStore = defineStore("tasks", {
         .order("id", { ascending: false });
       this.tasks = tasks;
     },
+    getUserId() {
+      const myUser = localStorage.getItem('supabase.auth.token');
+      console.log(myUser);
+    }
   },
 });
