@@ -8,7 +8,7 @@
         placeholder="Enter Text"
         class="form-control"
       />
-      <button @click="submitTask" class="btn btn-warning rounded-0">
+      <button @click="submitButton" class="btn btn-warning rounded-0">
         SUBMIT
       </button>
     </div>
@@ -27,7 +27,7 @@
           </td>
           <td>Pendiente</td>
 
-          <div @click="editTask(index)">
+          <div @click="editButton(task)">
             <button>Edit</button>
           </div>
           <div>
@@ -57,7 +57,7 @@
           </td>
           <td>Donete</td>
 
-          <div @click="editTask(index)">
+          <div @click="editButton(task)">
             <button>Edit</button>
           </div>
           <div>
@@ -92,6 +92,8 @@ export default {
       pendingTasks: [],
       completedTasks: [],
       todoTask: [],
+      editing: false,
+      taskId: null
     };
   },
   mounted() {
@@ -100,22 +102,39 @@ export default {
     this.getUserId();
   },
   methods: {
+    async submitButton() {
+      if(this.editing === false) {
+        await this.submitTask();
+      } else {
+        await this.editTask();
+        this.editing = false;
+        this.task = '';
+      }
+    },
+    async editTask() {
+        const { data, error } = await supabase
+        .from("tasks")
+        .update({ title: this.task })
+        .match({ id: this.taskId });
+        this.getAllTasks()
+    },
     async submitTask() {
       if (this.task.length === 0) return;
 
-     const myId = this.getUserId();
+      const myId = this.getUserId();
 
       try {
         const { data, error } = await supabase
-        .from("tasks")
-        .insert([{ title: this.task, user_id: myId }]);
-        if(error) throw error;
-      this.task = "";
-      this.getAllTasks(); 
-      } catch(error) {
-        console.log(error)
+          .from("tasks")
+          .insert([{ title: this.task, user_id: myId }]);
+        if (error) throw error;
+        this.task = "";
+        this.getAllTasks();
+      } catch (error) {
+        console.log(error);
       }
     },
+
 
     async deleteTask(task) {
       const myId = task.id;
@@ -149,9 +168,10 @@ export default {
       });
     },
 
-    editTask(index) {
-      this.task = this.tasks[index].name;
-      this.editedTask = index;
+    async editButton(value) {
+        this.editing = true;
+        this.task = value.title;
+        this.taskId = value.id;
     },
 
     changeStatus(task) {
@@ -161,6 +181,8 @@ export default {
       } else {
         this.tasks[myIndex].is_complete = false;
       }
+    
+
       // let newIndex = this.availableStatuses.indexOf(this.tasks[index].status);
       // if (++newIndex > 1) newIndex = 0;
       // this.tasks[index].status = this.availableStatuses[newIndex];
