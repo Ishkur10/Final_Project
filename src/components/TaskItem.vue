@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="container" style="max-width: 600px">
     <h2 class="text-center mt-5">TASK MAKER</h2>
     <div class="d-flex">
       <input
         v-model="task"
         type="text"
         placeholder="Enter Text"
-        class="form-control"
+        class="w-100 form-control"
       />
       <button @click="submitButton" class="btn btn-warning rounded-0">
         SUBMIT
@@ -16,7 +16,7 @@
       <thead>
         <tr>
           <th scope="col">Task</th>
-          <th scope="col">Status</th>
+          <th scope="col" style="width: 120px">Status</th>
           <th scope="col" class="text-center"></th>
         </tr>
       </thead>
@@ -39,14 +39,14 @@
         </tr>
       </tbody>
     </table>
-  </div>
+ 
 
   <div>
     <table class="table table-bordered mt-5">
       <thead>
         <tr>
           <th scope="col">Completed Task</th>
-          <th scope="col">Status</th>
+          <th scope="col" style="width: 120px">Status</th>
           <th scope="col" class="text-center"></th>
         </tr>
       </thead>
@@ -69,6 +69,7 @@
         </tr>
       </tbody>
     </table>
+  </div> 
   </div>
 </template>
 
@@ -81,7 +82,6 @@
 import { supabase } from "../supabase";
 export default {
   name: "TaskItem",
-
   data() {
     return {
       task: "",
@@ -120,9 +120,7 @@ export default {
     },
     async submitTask() {
       if (this.task.length === 0) return;
-
       const myId = this.getUserId();
-
       try {
         const { data, error } = await supabase
           .from("tasks")
@@ -134,8 +132,6 @@ export default {
         console.log(error);
       }
     },
-
-
     async deleteTask(task) {
       const myId = task.id;
       const { data, error } = await supabase
@@ -146,7 +142,6 @@ export default {
       // this.pendingTasks.splice(index, 1);
       // this.completedTasks.splice(index, 1);
     },
-
     async getAllTasks() {
       const { data: databaseTasks } = await supabase
         .from("tasks")
@@ -155,7 +150,6 @@ export default {
       this.tasks = databaseTasks;
       this.sortTasks();
     },
-
     sortTasks() {
       this.pendingTasks = [];
       this.completedTasks = [];
@@ -167,13 +161,11 @@ export default {
         }
       });
     },
-
     async editButton(value) {
         this.editing = true;
         this.task = value.title;
         this.taskId = value.id;
     },
-
     changeStatus(task) {
       let myIndex = this.tasks.indexOf(task);
       if (this.tasks[myIndex].is_complete === false) {
@@ -182,13 +174,11 @@ export default {
         this.tasks[myIndex].is_complete = false;
       }
     
-
       // let newIndex = this.availableStatuses.indexOf(this.tasks[index].status);
       // if (++newIndex > 1) newIndex = 0;
       // this.tasks[index].status = this.availableStatuses[newIndex];
       this.sortTasks();
     },
-
     getUserId() {
       const data = localStorage.getItem("supabase.auth.token");
       const session = JSON.parse(data);

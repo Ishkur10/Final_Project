@@ -1,19 +1,46 @@
 <template>
-<body class="text-center ">
-  <div>
-  <h3>SignIn</h3>
-  </div>
-  <div class="borderSign">
-  <div class="emailbutton">
-    <input type="email" v-model="email" placeholder="Enter your Email" />
-  </div>
-  <div class="passwordlable">
-    <input type="password" v-model="password" placeholder="Enter your Password" style="margin-left: 2px;" />
-  </div>
-
-  <button class="signinbutton" @click="signIn">SignIn</button>  
-  </div>
-  </body>
+    <div id="login">
+      <h3 class="text-center text-white pt-5">Login form</h3>
+      <div class="container">
+        <div
+          id="login-row"
+          class="row justify-content-center align-items-center"
+        >
+          <div id="login-column" class="col-md-6">
+            <div id="login-box" class="col-md-12">
+              <!-- <form id="login-form" class="form" @submit="signIn.prevent" method="post"> -->
+                <h3 class="text-center text-info">Sign In</h3>
+                <div class="form-group">
+                  <label for="username" class="text-info">Email:</label
+                  ><br />
+                  <input
+                    type="email"
+                    v-model="email"
+                    placeholder="Enter your Email"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password" class="text-info">Password:</label
+                  ><br />
+                  <input
+                    type="password"
+                    v-model="password"
+                    placeholder="Enter your Password"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-info btn-md" @click="signIn">
+                    Sign In
+                  </button>
+                </div>
+              <!-- </form> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -48,7 +75,7 @@ export default {
 </script>
 
 <style>
-.borderSign{
+/* .borderSign{
   border: 2px solid ;
   padding-bottom: 20px;
   width: auto;
@@ -65,5 +92,5 @@ export default {
 }
 .signinbutton{
   margin-top: 10px;
-}
+} */
 </style>

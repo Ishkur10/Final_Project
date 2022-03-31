@@ -1,14 +1,14 @@
 <template>
-      <div id="app">
 <!-- <Nav/> -->
 <div class="text-center">
     <div>
         <SignIn v-if="signIn" />
         <SignUp v-else />
-        <button class="changebutton" @click="change">Change</button>
+                        <div id="register-link" class="text-right">
+                  <a href="#" class="text-info" @click="change" >Register here</a>
+                </div>
     </div>
 </div>
-    </div>
 </template>
 
 <script>

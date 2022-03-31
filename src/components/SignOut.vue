@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <button class="bar" @click="signOut">Sign Out</button>
+  <div class="text-center mt-5">
+    <button  class="bar" @click="signOut">Sign Out</button>
   </div>
 </template>
 
